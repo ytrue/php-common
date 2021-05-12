@@ -11,7 +11,7 @@ use think\exception\ValidateException;
 /**
  * thinkphp5自定义API模块的错误显示
  */
-class ExceptionHandle extends Handle
+class Tp5ExceptionHandle extends Handle
 {
 
     public function render(Exception $e)

@@ -42,9 +42,9 @@ class Login
             $userInfo = $app->encryptor->decryptData($session['session_key'], $iv, $encryptedData);
             //业务逻辑....
 		   
-		    return 'ok！'
+		    return 'ok！';
         } catch (Exception $exception) {
-            return '无效数据！'
+            return '无效数据！';
         }
     }
 }

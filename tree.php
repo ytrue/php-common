@@ -2,10 +2,10 @@
 
 /**
  * 传值引用获得树（这个比递归好）
- * @param $data
+ * @param array $data
  * @return array
  */
-function generateTree($data)
+function generateTree(array $data): array
 {
     $items = array();
     foreach ($data as $v) {

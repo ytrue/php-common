@@ -1,21 +1,25 @@
 <?php
 
+use JetBrains\PhpStorm\Pure;
+
 /**
  * 获得文件类型
- * @param $file
+ * @param string $file
  * @return false|string
  */
-function getFileType($file)
+#[Pure]
+function getFileType(string $file): bool|string
 {
     return substr(strrchr($file, '.'), 1);
 }
 
 /**
  * 判断是否是图片
- * @param $fileType
+ * @param string $fileType
  * @return bool
  */
-function isImage($fileType)
+#[Pure]
+function isImage(string $fileType): bool
 {
     $arr = [
         'png',
@@ -33,10 +37,10 @@ function isImage($fileType)
 
 /**
  * 递归删除目录
- * @param $path
+ * @param string $path
  * @return bool
  */
-function delDir($path)
+function delDir(string $path): bool
 {
     //如果是目录则继续
     if (is_dir($path)) {

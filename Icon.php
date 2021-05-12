@@ -3,6 +3,8 @@
 
 namespace app\api\controller;
 
+use JetBrains\PhpStorm\NoReturn;
+
 /**
  * 生成后缀图标
  * Class Icon
@@ -12,13 +14,15 @@ class Icon
 {
     /**
      * 生成后缀图标
+     * @return void
      */
-    public function icon()
+    #[NoReturn]
+    public function icon(): void
     {
         $suffix = $this->request->request("suffix");
         header('Content-type: image/svg+xml');
         $suffix = $suffix ? $suffix : "FILE";
-        echo build_suffix_image($suffix);
+        echo $this->buildSuffixImage($suffix);
         exit;
     }
 
@@ -26,15 +30,15 @@ class Icon
     /**
      * 生成文件后缀图片
      * @param string $suffix 后缀
-     * @param null $background
+     * @param string|null $background
      * @return string
      */
-    public function build_suffix_image($suffix, $background = null)
+    public function buildSuffixImage(string $suffix, ?string $background = null): string
     {
         $suffix = mb_substr(strtoupper($suffix), 0, 4);
         $total = unpack('L', hash('adler32', $suffix, true))[1];
         $hue = $total % 360;
-        list($r, $g, $b) = hsv2rgb($hue / 360, 0.3, 0.9);
+        list($r, $g, $b) = $this->hsv2rgb($hue / 360, 0.3, 0.9);
 
         $background = $background ? $background : "rgb({$r},{$g},{$b})";
 
@@ -50,4 +54,64 @@ class Icon
 EOT;
         return $icon;
     }
+
+
+    /**
+     * 获得rgb颜色
+     * @param float $h
+     * @param float $s
+     * @param float $v
+     * @return  array
+     */
+    public function hsv2rgb(float $h, float $s, float $v): array
+    {
+        $r = $g = $b = 0;
+
+        $i = floor($h * 6);
+        $f = $h * 6 - $i;
+        $p = $v * (1 - $s);
+        $q = $v * (1 - $f * $s);
+        $t = $v * (1 - (1 - $f) * $s);
+
+        switch ($i % 6) {
+            case 0:
+                $r = $v;
+                $g = $t;
+                $b = $p;
+                break;
+            case 1:
+                $r = $q;
+                $g = $v;
+                $b = $p;
+                break;
+            case 2:
+                $r = $p;
+                $g = $v;
+                $b = $t;
+                break;
+            case 3:
+                $r = $p;
+                $g = $q;
+                $b = $v;
+                break;
+            case 4:
+                $r = $t;
+                $g = $p;
+                $b = $v;
+                break;
+            case 5:
+                $r = $v;
+                $g = $p;
+                $b = $q;
+                break;
+        }
+
+        return [
+            floor($r * 255),
+            floor($g * 255),
+            floor($b * 255)
+        ];
+    }
 }
+
+
