@@ -44,3 +44,19 @@ function arraySplit(array $data, int $num = 5): array
     }
     return $arrRet;
 }
+
+
+//二维数组，指定字段，取最大值
+function searchmax($arr, $field) // 最小值 只需要最后一个max函数  替换为 min函数即可
+{
+    if (!is_array($arr) || !$field) { //判断是否是数组以及传过来的字段是否是空
+        return false;
+    }
+
+    $temp = array();
+    foreach ($arr as $key => $val) {
+        $temp[] = $val[$field]; // 用一个空数组来承接字段
+    }
+    return max($temp);  // 用php自带函数 max 来返回该数组的最大值，一维数组可直接用max函数
+
+}
