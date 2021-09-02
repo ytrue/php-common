@@ -47,7 +47,7 @@ function arraySplit(array $data, int $num = 5): array
 
 
 //二维数组，指定字段，取最大值
-function searchmax($arr, $field) // 最小值 只需要最后一个max函数  替换为 min函数即可
+function searchMax(array $arr,string $field):int // 最小值 只需要最后一个max函数  替换为 min函数即可
 {
     if (!is_array($arr) || !$field) { //判断是否是数组以及传过来的字段是否是空
         return false;
